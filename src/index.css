@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #0B2434;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+div#root {
+    background-color: #F5F5F5;
+    height:100%;
+    width: 100%;
+    border-radius: 10px;
+    max-height: 500px;
+    max-width: 600px;
+    padding: 20px;
+}
+
+main {
+    height: 100%;
+}
