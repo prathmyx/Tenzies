@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Die from "./Die";
+import Confetti from 'react-confetti';
 
 export default function App() {
     const [dies, setDies] = useState([]);
@@ -18,21 +19,30 @@ export default function App() {
         );
     }
 
+    const win = (dies.every((die) => die.isHeld && die.value == dies[0].value) && dies.length > 0);
+
     function handleClick(count, index) {
         if (count === -1) {
             setDies(() => getAllDies());
-            setCount(prev => prev + 1);
+            setCount(0);
         }
         else if (index === -1) {
-            setDies((prevDies) => prevDies.map((die, index) => {
-                if (die.isHeld === false) {
-                    return {...die, value: Math.ceil(Math.random() * 6)}
-                }
-                return die;
-            }));
-            setCount(prev => prev + 1);
-        } else {
-            setDies((prevDies) => prevDies.map((die, ind) => {
+            if (win) {
+                setDies(() => getAllDies());
+                setCount(0);
+            } else {
+                setDies((prevDies) => prevDies.map((die, index) => {
+                    if (die.isHeld === false) {
+                        return {...die, value: Math.ceil(Math.random() * 6)}
+                    }
+                    return die;
+                }));
+                setCount(prev => prev + 1);
+            }
+
+        } else if (index > -1) {
+            setDies((prevDies) => 
+                prevDies.map((die, ind) => {
                 if (ind === index) {
                     return {...die, isHeld: !die.isHeld}
                 } else {
@@ -40,12 +50,18 @@ export default function App() {
                 }
                 }
             ));
-        } 
+        }
     }
 
     return (
         <>
             <main>
+                {win && <Confetti />}
+                <div>
+                    {win && <p>Congratulations! You won in {count} steps! Press "New Game" to start again.</p>}
+                </div>
+                <h1 className="title">Tenzies</h1>
+                {!win ? <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p> : "" }
                 <div className="dies-container">
                     {dies.map((die, index) =>
                         <Die 
@@ -58,7 +74,7 @@ export default function App() {
                     )}
                 </div>
 
-                <button className="roll-dice" onClick={() => handleClick(count, -1)}>{count === -1 ? "New Game" : "Roll"}</button>
+                <button className="roll-dice" onClick={() => handleClick(count, -1)}>{win ? "New Game" : "Roll"}</button>
             </main> 
         </>
     );
