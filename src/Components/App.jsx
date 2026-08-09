@@ -45,7 +45,7 @@ export default function App() {
                     {diesElement}
                 </div>
 
-                <button className="roll-dice" onClick={() => handleClick(count, -1)}>Roll</button>
+                <button className="roll-dice" onClick={() => handleClick(count, -1)}>{count === -1 ? "New Game" : "Roll"}</button>
             </main> 
         </>
     );
