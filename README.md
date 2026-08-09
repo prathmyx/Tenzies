@@ -6,7 +6,7 @@ The objective is to roll until all dice show the same number. Players can hold d
 ---
 
 ## Live Demo
-Deployed via GitHub Pages: [Play Tenzies](https://your-username.github.io/tenzies)
+Deployed via GitHub Pages: [Play Tenzies](https://prathmyx.github.io/Tenzies/)
 
 ---
 
@@ -40,13 +40,13 @@ Make sure you have **Node.js** and **pnpm** installed.
 Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/tenzies.git
+git clone https://github.com/prathmyx/Tenzies.git
 ```
 
 Navigate to the project directory:
 
 ```bash
-cd tenzies
+cd Tenzies
 ```
 
 Install dependencies:
@@ -80,7 +80,7 @@ pnpm preview
 ## Live Demo
 
 **GitHub Pages:**
-https://github.io/prathmyx/Tenzies
+https://prathmyx.github.io/Tenzies/
 
 ## Project Inspiration
 
