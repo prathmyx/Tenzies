@@ -1,15 +1,21 @@
+import { useState } from "react";
 import Die from "./Die";
 
 export default function App() {
-    const diesElement = new Array(10).fill(0).map((_, index) => {
-        return <Die key={index} value={Math.ceil(Math.random() * 6)} isHeld={false} />
-    });
-
-
-    function handleClick() {
-        console.log("clicked");
+    const getAllDies = function() { 
+        return new Array(10)
+        .fill(0)
+        .map((_, index) => 
+            <Die key={index} value={Math.ceil(Math.random() * 6)} isHeld={false} />
+        );
     }
 
+    const [diesElement, setDiesElement] = useState(() => getAllDies());
+
+    function handleClick() {
+        console.log("Roll button clicked");
+        setDiesElement(() => getAllDies());
+    }
 
     return (
         <>
