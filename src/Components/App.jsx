@@ -2,19 +2,40 @@ import { useState } from "react";
 import Die from "./Die";
 
 export default function App() {
+    const [diesElement, setDiesElement] = useState(null);
+    const [count, setCount] = useState(-1);
+
     const getAllDies = function() { 
         return new Array(10)
         .fill(0)
         .map((_, index) => 
-            <Die key={index} value={Math.ceil(Math.random() * 6)} isHeld={false} />
+            <Die key={index} ind={index} value={Math.ceil(Math.random() * 6)} isHeld={false} handle={handleClick}/>
         );
     }
 
-    const [diesElement, setDiesElement] = useState(() => getAllDies());
-
-    function handleClick() {
-        console.log("Roll button clicked");
-        setDiesElement(() => getAllDies());
+    function handleClick(count, index) {
+        if (count === -1) {
+            setDiesElement(() => getAllDies());
+            setCount(prev => prev + 1);
+        }
+        else if (index === -1) {
+            setDiesElement((prevDies) => prevDies.map((die, index) => {
+                if (die.props.isHeld === false) {
+                    return <Die key={index} ind={index} value={Math.ceil(Math.random() * 6)} isHeld={false} handle={handleClick}/>;
+                }
+                return die;
+            }));
+            setCount(prev => prev + 1);
+        } else {
+            setDiesElement((prevDies) => prevDies.map((die, ind) => {
+                if (ind === index) {
+                    return <Die key={ind} ind={ind} value={die.props.value} isHeld={!die.props.isHeld} handle={handleClick}/>;
+                } else {
+                    return die;
+                }
+                }
+            ));
+        } 
     }
 
     return (
@@ -24,7 +45,7 @@ export default function App() {
                     {diesElement}
                 </div>
 
-                <button className="roll-dice" onClick={handleClick}>Roll</button>
+                <button className="roll-dice" onClick={() => handleClick(count, -1)}>Roll</button>
             </main> 
         </>
     );
